@@ -213,7 +213,6 @@ const loadAssets = () => {
 
     assetPromises.push(assetDeferred.promise());
   });
-
   return $.when.apply($, assetPromises);
 };
 
@@ -233,9 +232,19 @@ const drawSkier = () => {
   let loadedAssets = store.getters['loadedAssets'];
   var skierAssetName = getSkierAsset();
   var skierImage = loadedAssets[skierAssetName];
+
+  // Hot Fix - issue with Left Turn Collsion Bug
+  if (skierImage === undefined) {
+    let w = 27;
+    let h = 23;
+    let image = '/assets/skier_left.png';
+    let skimage = new Image(w, h);
+    skimage.src = image;
+    skierImage = skimage;
+  }
+
   var x = (gameWidth - skierImage.width) / 2;
   var y = (gameHeight - skierImage.height) / 2;
-
   ctx.drawImage(skierImage, x, y, skierImage.width, skierImage.height);
 };
 
@@ -308,26 +317,38 @@ const checkIfSkierHitObstacle = () => {
   let gameHeight = store.getters['game'].height;
   let loadedAssets = store.getters['loadedAssets'];
   var skierAssetName = getSkierAsset();
+
   var skierImage = loadedAssets[skierAssetName];
+
+  // Hot Fix - issue with Left Turn Collsion Bug
+  if (skierImage === undefined) {
+    let w = 27;
+    let h = 23;
+    let image = '/assets/skier_left.png';
+    let skimage = new Image(w, h);
+    skimage.src = image;
+    skierImage = skimage;
+  }
+
   var skierRect = {
     left: skierMapX + gameWidth / 2,
     right: skierMapX + skierImage.width + gameWidth / 2,
     top: skierMapY + skierImage.height - 5 + gameHeight / 2,
     bottom: skierMapY + skierImage.height + gameHeight / 2,
   };
+
   let obstacles = store.getters['obstacles'];
+  var obstacleRect;
   var collision = _.find(obstacles, function(obstacle) {
     var obstacleImage = loadedAssets[obstacle.type];
-    var obstacleRect = {
+    obstacleRect = {
       left: obstacle.x,
       right: obstacle.x + obstacleImage.width,
       top: obstacle.y + obstacleImage.height - 5,
       bottom: obstacle.y + obstacleImage.height,
     };
-
     return intersectRect(skierRect, obstacleRect);
   });
-
   if (collision) {
     store.dispatch('skierDirection', 0);
   }
@@ -393,12 +414,10 @@ const render = () => {
   let score = store.getters['time'];
   let update = (score += 1);
   store.dispatch('tick', update);
-
   ctx.save();
 
   // Retina support
   ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-
   clearCanvas();
   moveSkier();
   checkIfSkierHitObstacle();
