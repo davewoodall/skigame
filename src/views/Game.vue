@@ -1,25 +1,20 @@
 <template>
-  <div>
-    <small>timer: {{ skiScore }}</small>
-  </div>
+  <div></div>
 </template>
 
 <script>
-import game from '../game.js';
+import skiGame from '@/boot';
 export default {
   data() {
     return {
-      score: 0,
+      game: skiGame,
     };
   },
-  computed: {
-    skiScore() {
-      this.$store.getters['time'];
-      return this.$store.getters['time'];
-    },
-  },
+  computed: {},
   methods: {},
-  created() {},
+  created() {
+    this.game.boot();
+  },
 };
 </script>
 
