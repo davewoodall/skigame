@@ -10,22 +10,23 @@ export default {
   data() {
     return {
       score: 0,
-    }
+    };
   },
   computed: {
-  skiScore() {
-      this.$store.getters['time']
-      return this.$store.getters['time']
-    }
+    skiScore() {
+      this.$store.getters['time'];
+      return this.$store.getters['time'];
+    },
   },
   methods: {},
-  created() {}
-}
+  created() {},
+};
 </script>
 
 <style type="text/css">
-  html, body {
-    margin: 0;
-    padding: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 </style>

@@ -1,0 +1,12 @@
+{
+  "trailingComma": "es5",
+  "auto_format_on_save": true,
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": true,
+    "auto_format_on_save_excludes": [
+        "*/node_modules/*",
+        "*/file.js",
+        "*.json"
+    ]
+}
