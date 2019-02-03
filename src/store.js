@@ -5,8 +5,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   getters: {
-    time(state) {
+    score(state) {
       return state.score;
+    },
+    highScore(state) {
+      return state.highScore;
+    },
+    prevMove(state) {
+      return state.prevMove;
     },
     ctx(state) {
       return state.ctx;
@@ -26,6 +32,8 @@ export default new Vuex.Store({
   },
   state: {
     score: 0,
+    highScore: 0,
+    prevMove: 0,
     ctx: 0,
     skier: {
       direction: 5,
@@ -77,6 +85,15 @@ export default new Vuex.Store({
       let assetImage = data[1];
       state.loadedAssets[assetName] = assetImage;
     },
+    setScore(state, data) {
+      state.score = data;
+    },
+    setHighScore(state, data) {
+      state.highScore = data;
+    },
+    prevMove(state, data) {
+      state.prevMove = data;
+    },
   },
   actions: {
     tick({ commit }, data) {
@@ -111,6 +128,12 @@ export default new Vuex.Store({
     },
     loadedAssets({ commit }, data) {
       commit('loadedAssets', data);
+    },
+    setScore({ commit }, data) {
+      commit('setScore', data);
+    },
+    setHighScore({ commit }, data) {
+      commit('setHighScore', data);
     },
   },
 });

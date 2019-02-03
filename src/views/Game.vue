@@ -1,16 +1,21 @@
 <template>
-  <div></div>
+  <div>
+    <ScoreBoard />
+  </div>
 </template>
 
 <script>
-import skiGame from '@/boot';
+import ScoreBoard from '@/components/ScoreBoard';
+import skiGame from '@/game/boot';
 export default {
+  components: {
+    ScoreBoard,
+  },
   data() {
     return {
       game: skiGame,
     };
   },
-  computed: {},
   methods: {},
   created() {
     this.game.boot();
@@ -19,9 +24,16 @@ export default {
 </script>
 
 <style type="text/css">
+:root {
+  --blue: #8cebff;
+}
 html,
 body {
   margin: 0;
-  padding: 0;
+  background: var(--blue);
+  box-sizing: border-box;
+}
+canvas {
+  background: white;
 }
 </style>
